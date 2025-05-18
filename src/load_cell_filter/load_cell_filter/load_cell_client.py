@@ -23,11 +23,11 @@ def main():
     rclpy.init()
     load_cell_client = LoadCellClient()
 
-    future = load_cell_client.send_request(1)
+    future = load_cell_client.send_request(2)
     rclpy.spin_until_future_complete(load_cell_client, future)
     response = future.result()
     load_cell_client.get_logger().info(
-        'Data from load cell %i is = %s' % (1, response.data))
+        'Data from load cell %i is = %s' % (2, response.data))
 
     load_cell_client.destroy_node()
     rclpy.shutdown()

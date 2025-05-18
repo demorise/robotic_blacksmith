@@ -47,7 +47,7 @@ class Sensor(Thread):
 
     def connect(self) -> bool:
         # Wait for a connection
-            print('waiting for a connection')
+            print('waiting for a connection to sensor on ', self.server_address)
             while (self.client_address is None):
                 self.connection, self.client_address = self.sock.accept()
             self.connected = True
@@ -106,14 +106,14 @@ def main(args=None):
     t1.daemon = True
 
     ## you can also launch a second sensor
-    # sensor2 = Sensor('127.0.0.1', 10000, 4000, 0.003) # Define a sensor with 4000Hz sampling rate and 3ms delay
-    # t2 = Thread(target = sensor2.run)    
-    # t2.daemon = True
+    sensor2 = Sensor('127.0.0.5', 10000, 4000, 0.003) # Define a sensor with 4000Hz sampling rate and 3ms delay
+    t2 = Thread(target = sensor2.run)    
+    t2.daemon = True
 
 
 
     t1.start()
-    # t2.start()
+    t2.start()
     
     while True:
         pass
