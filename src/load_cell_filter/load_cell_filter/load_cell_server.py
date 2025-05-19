@@ -25,22 +25,21 @@ class LoadCellService(Node):
         self.sock2.connect(server_address)
 
     def sensor_data_callback(self, request, response):
-        self.get_logger().info('Received request for load cell with id %i'% request.id)
+        # self.get_logger().info('Received request for load cell with id %i'% request.id)
         message_string = str(self.NUMBER_OF_SAMPLES)
         message = message_string.encode()
         
         if (request.id==1):
-            print("sock1")
             self.sock1.sendall(message)
             byte_data = self.sock1.recv(10000)
             data =  np.frombuffer(byte_data)
             response.data = np.array_str(data)
-        if (request.id==2):
-            print("sock2")
+        elif (request.id==2):
             self.sock2.sendall(message)
             byte_data = self.sock2.recv(10000)
             data =  np.frombuffer(byte_data)
-            response.data = np.array_str(data)  
+            response.data = np.array_str(data)
+        # print(response.data)  
         return response
 
     def __del__(self):
